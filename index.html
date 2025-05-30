@@ -2,131 +2,289 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Успеваемость Ивана за месяц</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>График активности умельцев</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
-    /* Основные стили страницы */
-    body {
+    /* Сброс и базовые стили */
+    * {
+      box-sizing: border-box;
       margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 0;
     }
-    .container {
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #f0f2f5;
+      color: #333;
+      line-height: 1.6;
+    }
+    header {
       background: #fff;
       padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    canvas {
-      background: #f8f8f8;
-      border: 1px solid #ddd;
+    header h1 {
+      font-size: 2.5rem;
+      color: #2575fc;
+    }
+    main {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    /* Стили секций графика */
+    .graph-section {
+      background: #fff;
+      margin-bottom: 40px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      overflow: hidden;
+      /* Начальное состояние для анимации */
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1s forwards;
+    }
+    /* Задержка анимации для каждой секции */
+    .graph-section:nth-of-type(1) { animation-delay: 0.2s; }
+    .graph-section:nth-of-type(2) { animation-delay: 0.4s; }
+    .graph-section:nth-of-type(3) { animation-delay: 0.6s; }
+    .graph-section:nth-of-type(4) { animation-delay: 0.8s; }
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .graph-section h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      color: #444;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: 10px;
+    }
+    .graph {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      gap: 20px;
+    }
+    .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      max-width: 150px;
+    }
+    .bar-graphic {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      background: #e0e0e0;
       border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 10px;
     }
-    .average {
-      margin-top: 20px;
-      font-size: 20px;
+    .bar-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      transition: height 1.5s ease-out;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .bar-text {
       font-weight: bold;
-      color: #333;
+      font-size: 1rem;
+      color: #555;
+    }
+    
+    /* Футер */
+    footer {
+      background: #fff;
+      padding: 20px;
+      text-align: center;
+      border-top: 1px solid #e0e0e0;
+      font-size: 0.9rem;
+      color: #777;
+    }
+    footer a {
+      color: #2575fc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Адаптация для мобильных устройств */
+    @media (max-width: 768px) {
+      .graph {
+        flex-direction: column;
+        align-items: center;
+      }
+      .bar {
+        max-width: 80%;
+        margin-bottom: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Успеваемость Ивана за месяц</h2>
-    <canvas id="chartCanvas" width="800" height="400"></canvas>
-    <div class="average">Средняя успеваемость: 63,23%</div>
-  </div>
-
+  <header>
+    <h1>График активности умельцев</h1>
+  </header>
+  
+  <main>
+    <!-- Секция 1: Активность Ивана за четверть -->
+    <section class="graph-section">
+      <h2>Активность Ивана за четверть</h2>
+      <div class="graph">
+        <div class="bar" data-percentage="57">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">1-2 неделя</span>
+        </div>
+        <div class="bar" data-percentage="79">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">3-4 неделя</span>
+        </div>
+        <div class="bar" data-percentage="61">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">5-6 неделя</span>
+        </div>
+        <div class="bar" data-percentage="94">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">7-8 неделя</span>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Секция 2: Активность Полины за четверть -->
+    <section class="graph-section">
+      <h2>Активность Полины за четверть</h2>
+      <div class="graph">
+        <div class="bar" data-percentage="33">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">1-2 неделя</span>
+        </div>
+        <div class="bar" data-percentage="49">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">3-4 неделя</span>
+        </div>
+        <div class="bar" data-percentage="78">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">5-6 неделя</span>
+        </div>
+        <div class="bar" data-percentage="9">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">7-8 неделя</span>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Секция 3: Активность Галины за четверть -->
+    <section class="graph-section">
+      <h2>Активность Галины за четверть</h2>
+      <div class="graph">
+        <div class="bar" data-percentage="60">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">1-2 неделя</span>
+        </div>
+        <div class="bar" data-percentage="21">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">3-4 неделя</span>
+        </div>
+        <div class="bar" data-percentage="12">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">5-6 неделя</span>
+        </div>
+        <div class="bar" data-percentage="37">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">7-8 неделя</span>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Секция 4: Четвертый раздел -->
+    <section class="graph-section">
+      <h2>Активность Глеба за четверть</h2>
+      <div class="graph">
+        <div class="bar" data-percentage="10">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">1-2 неделя</span>
+        </div>
+        <div class="bar" data-percentage="19">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">3-4 неделя</span>
+        </div>
+        <div class="bar" data-percentage="73">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">5-6 неделя</span>
+        </div>
+        <div class="bar" data-percentage="58">
+          <div class="bar-graphic">
+            <div class="bar-fill"></div>
+          </div>
+          <span class="bar-text">7-8 неделя</span>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+  
+  <footer>
+    <p>© Vertex Dynamics 2025, Inc. SRU 2024-2025. Все права защищены.</p>
+    <p>Электронная почта для связи: <a href="mailto:communityofdevelopingcraftsmen@gmail.com">communityofdevelopingcraftsmen@gmail.com</a></p>
+  </footer>
+  
   <script>
-    const canvas = document.getElementById('chartCanvas');
-    const ctx = canvas.getContext('2d');
-
-    // Данные для столбцов
-    const data = [
-      { label: "1 неделя", value: 73 },
-      { label: "2 неделя", value: 21 },
-      { label: "3 неделя", value: 66 },
-      { label: "4 неделя", value: 93 }
-    ];
-
-    // Параметры анимации
-    const animationDuration = 1500; // миллисекунд
-    let animationStart = null;
-
-    // Параметры графика
-    const margin = { top: 30, right: 20, bottom: 50, left: 50 };
-    const chartWidth = canvas.width - margin.left - margin.right;
-    const chartHeight = canvas.height - margin.top - margin.bottom;
-    const numBars = data.length;
-    const barSpacing = 30; // отступ между столбцами
-    const barWidth = (chartWidth - barSpacing * (numBars + 1)) / numBars;
-
-    // Функция сглаживания анимации (easeOutCubic)
-    function easeOutCubic(t) {
-      return (--t) * t * t + 1;
-    }
-
-    // Функция отрисовки графика в зависимости от прогресса анимации (0-1)
-    function drawChart(progress) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Рисуем оси
-      ctx.strokeStyle = "#333";
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      // Ось Y
-      ctx.moveTo(margin.left, margin.top);
-      ctx.lineTo(margin.left, canvas.height - margin.bottom);
-      // Ось X
-      ctx.lineTo(canvas.width - margin.right, canvas.height - margin.bottom);
-      ctx.stroke();
-
-      // Рисуем столбцы
-      data.forEach((bar, index) => {
-        const x = margin.left + barSpacing * (index + 1) + barWidth * index;
-        const targetHeight = (bar.value / 100) * chartHeight; // итоговая высота столбца
-        const currentHeight = targetHeight * easeOutCubic(progress);
-        const y = canvas.height - margin.bottom - currentHeight;
-
-        // Градиент для столбца
-        const grad = ctx.createLinearGradient(0, y, 0, canvas.height - margin.bottom);
-        grad.addColorStop(0, '#66a6ff');
-        grad.addColorStop(1, '#89f7fe');
-
-        ctx.fillStyle = grad;
-        ctx.fillRect(x, y, barWidth, currentHeight);
-
-        // Отрисовка процентного значения над столбцом
-        ctx.fillStyle = "#333";
-        ctx.font = "16px sans-serif";
-        ctx.textAlign = "center";
-        ctx.fillText(Math.round(bar.value * easeOutCubic(progress)) + '%',
-                     x + barWidth / 2, y - 10);
-
-        // Отрисовка подписи (например, "1 неделя") под осью X
-        ctx.fillText(bar.label, x + barWidth / 2, canvas.height - margin.bottom + 20);
+    // Анимация заполнения столбцов по заданной высоте из data-percentage
+    document.addEventListener('DOMContentLoaded', function() {
+      const bars = document.querySelectorAll('.bar');
+      bars.forEach((bar, index) => {
+        const percentage = bar.getAttribute('data-percentage');
+        const barFill = bar.querySelector('.bar-fill');
+        // Задержка для ступенчатой анимации столбцов
+        setTimeout(() => {
+          barFill.style.height = percentage + '%';
+        }, 200 * index);
       });
-    }
-
-    // Функция анимации с использованием requestAnimationFrame
-    function animate(timestamp) {
-      if (!animationStart) animationStart = timestamp;
-      const elapsed = timestamp - animationStart;
-      const progress = Math.min(elapsed / animationDuration, 1);
-
-      drawChart(progress);
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    }
-
-    requestAnimationFrame(animate);
+    });
   </script>
 </body>
 </html>
